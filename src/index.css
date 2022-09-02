@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+#root {
+    background-color: #D8E7FF;
+}
+
+div {
+    display: flex;
+    gap: 40px;
+    margin: 5px;
+}
+
+input, select {
+    background-color: #FFFFFF;
+    flex-grow: 1;
+    padding: 5px 15px;
+    border-radius: 10px;
+}
