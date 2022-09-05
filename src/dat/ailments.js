@@ -82,7 +82,7 @@ const ailments = ['ADHD',
     'Glaucoma',
     'Osteoporosis',
     'Psychiatric Care',
-    'Venereal DIsease',
+    'Venereal Disease',
     'Chronic Ear Problems',
     'Food or Drug Allergies',
     ]

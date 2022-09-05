@@ -1,24 +1,14 @@
 import { useState } from 'react'
 import medCondObj from './dat/ailments'
 
-const Ailment = () => {
-  const cssList = 'inline-block m-2 px-5 py-1 rounded-full border border-black border-solid cursor-pointer bg-white hover:bg-blue-400'
-  const toObjKey = (x) => x.split(" ").join("--").toLowerCase()
-  let optionDefaultValue = false
-  
-  const isSelected = (e) => {
-    optionDefaultValue = !optionDefaultValue
-    if(optionDefaultValue) {
-      e.target.className = `bg-black text-white ${cssList}`
-    }
-    else{
-      e.target.className = `${cssList}`
-    }
-  }
+const Ailment = ({obj,toggleSelection}) => {
+  const btnClass = 'inline-block m-2 px-5 py-1 rounded-full border border-black border-solid cursor-pointer hover:bg-blue-400 active:bg-blue-900'
+  const btnDark = `bg-black text-white ${btnClass}`
+  const btnLight = `bg-white text-black ${btnClass}`
+  const btnTheme = (obj.isSelected)?btnDark:btnLight
 
-  return Object.keys(medCondObj).map((el,i) => {
-    return <span onClick={isSelected} className={cssList} key={i} id={toObjKey(el)}>{medCondObj[el].name}</span>
-  })
+  //console.log(obj)
+  return <span onClick={toggleSelection} className={btnTheme} id={obj.id}>{obj.name}</span>
 }
 
 const App =()=> {
@@ -28,12 +18,19 @@ const App =()=> {
   const [ sex , setSex] = useState('other')
   const [ contactDetail , setContactDetail] = useState({})
   const [ physicalAttr , setPhysicalAttr] = useState({})
-  //const [ medicalCondition, setMedicalCondition ] = useState({})
+  const [storedObj,setStoredObj] = useState(medCondObj)
 
   const handleChange = (fn) => {
     return (e) => {
       fn(e.target.value)
     }
+  }
+
+  const toggleSelectionOf = (id) => {
+    const cond = Object.keys(storedObj).find(a => storedObj[a].id === id)
+    storedObj[cond] = {...storedObj[cond], isSelected:!storedObj[cond].isSelected}
+    setStoredObj({...storedObj})
+    console.log(storedObj)
   }
 
   return (
@@ -66,7 +63,10 @@ const App =()=> {
       </div>
       <h2>Medical History</h2>
       <div className='flex-wrap'>
-        <Ailment />
+        {Object.keys(storedObj).map((ailment,i) => {
+          return <Ailment obj={storedObj[ailment]} toggleSelection={() => toggleSelectionOf(storedObj[ailment].id)} key={i} />
+        })
+        }
       </div>
     </form>
     </>
