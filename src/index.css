@@ -4,14 +4,14 @@
 
 
 #root {
-    background-color: #D8E7FF;
+    background-color: #FFFFFF;
 }
 
 input, select {
     background-color: #FFFFFF;
     flex-grow: 1;
     padding: 5px 15px;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 h1 {
@@ -22,4 +22,8 @@ h1 {
 h2 {
     font-size: 1vw;
     font-weight: 600;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
