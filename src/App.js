@@ -34,12 +34,12 @@ const App =()=> {
   }
 
   return (
-    <div className='flex flex-col lg:flex-row'>
-      <div className='app--navigation p-10 w-100 h-100 lg:w-2/12 h-screen'>
+    <div className='p-0 flex flex-col lg:flex-row'>
+      <div className='app--navigation p-2 w-100 h-0 lg:p-10 w-2/12 h-screen'>
 
       </div>
       <div className='lg:w-10/12 h-full'>
-        <form className='p-16 h-full'>
+        <form className='p-2 h-full lg:p-10'>
           <div className='p-0 h-full rounded-xl  bg-light--blue'>
             <div className='scroll-smooth snap-x block whitespace-nowrap overflow-x-scroll h-full'>
               <div className='p-6 snap-always snap-center inline-block w-full align-top' id='formInput'>
