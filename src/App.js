@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import medCondObj from './dat/ailments'
+import axios from 'axios'
+
 
 const Ailment = ({obj,toggleSelection}) => {
   const btnClass = 'inline-block m-1 px-5 py-1 rounded-full cursor-pointer hover:bg-medium--blue active:bg-main--blue'
@@ -12,13 +14,17 @@ const Ailment = ({obj,toggleSelection}) => {
 }
 
 const App =()=> {
-  const [ firstName , setFirstName] = useState('')
-  const [ lastName , setLastName] = useState('')
-  const [ birthDay , setBirthDay] = useState('')
-  const [ sex , setSex] = useState('other')
-  const [ contactDetail , setContactDetail] = useState({})
-  const [ physicalAttr , setPhysicalAttr] = useState({})
-  const [storedObj,setStoredObj] = useState(medCondObj)
+  const [ firstName , setFirstName ] = useState('')
+  const [ lastName , setLastName ] = useState('')
+  const [ birthDay , setBirthDay ] = useState('')
+  const [ sex , setSex ] = useState('other')
+  const [ contactDetail , setContactDetail ] = useState({})
+  const [ physicalAttr , setPhysicalAttr ] = useState({})
+  const [ storedObj,setStoredObj ] = useState(medCondObj)
+
+  useEffect(()=> {
+    axios.get('https://cryptic-headland-74219.herokuapp.com/api/records').then(response => console.log(response))
+  })
 
   const handleChange = (fn) => {
     return (e) => {
@@ -31,6 +37,29 @@ const App =()=> {
     storedObj[cond] = {...storedObj[cond], isSelected:!storedObj[cond].isSelected}
     setStoredObj({...storedObj})
     console.log(storedObj)
+  }
+
+  const saveRecord = (e) => {
+    const medHist = Object.keys(storedObj).filter(e => storedObj[e].isSelected === true)
+    const medHistObj = {}
+    e.preventDefault()
+    const patientInfo = {
+      id: Math.floor(Math.random()*99999999),
+      firstName: firstName,
+      lastName: lastName,
+      birthDay: birthDay,
+      sex: sex,
+      contactDetail: contactDetail,
+      physicalAttribute: physicalAttr,
+      //Add Doctor's notes here
+      medicalHistoryRecord: medHist.map(e => medHistObj[e] = storedObj[e]),
+    }
+
+    axios
+    .post('https://cryptic-headland-74219.herokuapp.com/api/records', patientInfo)
+    .then(response => {
+      console.log(response.data)
+    })
   }
 
   return (
@@ -62,10 +91,15 @@ const App =()=> {
                   <input name="telephone" type="tel" placeholder="Contact Number" onChange={(e) => setContactDetail({...contactDetail, contactNumber: e.target.value})}/>
                   <input name="email" type="email" placeholder="Email" onChange={(e) => setContactDetail({...contactDetail, emailAddress: e.target.value})}/>
                 </div>
+                <h2>Physical Attributes</h2>
                 <div className='flex gap-2 m-2'>
                   <input name="height" type="number" placeholder="Height in cm" onChange={(e) => setPhysicalAttr({...physicalAttr, bodyHeight: e.target.value})}/>
                   <input name="weight" type="number" placeholder="Weight in Kg" onChange={(e) => setPhysicalAttr({...physicalAttr, bodyWeight: e.target.value})}/>
                   <input name="bloodType" type="text" placeholder="Blood Type" onChange={(e) => setPhysicalAttr({...physicalAttr, bloodType: e.target.value})}/>
+                </div>
+                <div className='flex flex-col gap-2 m-2'>
+                  <p><label>Doctor's Notes</label></p>
+                  <textarea className="w-full" placeholder="Doctor's notes for physical attributes"></textarea>
                 </div>
               </div>
               <div className='p-6 snap-always snap-center inline-block whitespace-normal' id='medicalHistorySelection'>
@@ -79,8 +113,9 @@ const App =()=> {
               </div>
             </div>
               <div className='p-10 flex gap-4 place-content-end w-full'>
-                <a className='bg-white rounded-full px-10 py-2' href="#formInput">Previous</a>
-                <a className='bg-white rounded-full px-10 py-2' href="#medicalHistorySelection">Next</a>
+                <a className='bg-main--blue text-white rounded-full px-10 py-2' href="#formInput">Previous</a>
+                <a className='bg-main--blue text-white rounded-full px-10 py-2' href="#medicalHistorySelection">Next</a>
+                <a className='bg-green text-white rounded-full px-10 py-2' href="#medicalHistorySelection" onClick={saveRecord}>Save to the Cloud</a>
               </div>
           </div>
         </form>

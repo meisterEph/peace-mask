@@ -1,0 +1,48 @@
+{
+  "records": [
+    {
+      "id": 96831967,
+      "firstName": "Heber",
+      "lastName": "Indino",
+      "birthDay": "2022-09-24",
+      "sex": "male",
+      "contactDetail": {
+        "mailAddress": "55-160 Naupaka Street",
+        "contactNumber": "8083586791",
+        "emailAddress": "jayindinodesigns@gmail.com"
+      },
+      "physicalAttribute": {
+        "bodyHeight": "172",
+        "bodyWeight": "70",
+        "bloodType": "B"
+      },
+      "medicalHistoryRecord": [
+        {
+          "id": 14,
+          "name": "Cochlear Implant",
+          "isSelected": true
+        },
+        {
+          "id": 23,
+          "name": "Cortisone Treatments",
+          "isSelected": true
+        },
+        {
+          "id": 27,
+          "name": "Cosmetic Surgery",
+          "isSelected": true
+        },
+        {
+          "id": 35,
+          "name": "Artificial Heart Valves",
+          "isSelected": true
+        },
+        {
+          "id": 42,
+          "name": "Depression",
+          "isSelected": true
+        }
+      ]
+    }
+  ]
+}
