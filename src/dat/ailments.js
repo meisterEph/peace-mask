@@ -93,4 +93,5 @@ const ailments = ['ADHD',
         return medCondObj[el.split(" ").join("--")]={id: i, name: el, isSelected: false}
     })
 
+    // Export all the object data from the array to App.js
     export default medCondObj
